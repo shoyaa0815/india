@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>India Quest</title>
+  <style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #121212, #1e1e1e);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #f0f0f0;
+  }
+
+  .container {
+    background: #2c2c2c;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+  }
+
+  h1 {
+    color: #ff9100;
+  }
+
+  .subtitle {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+  }
+
+  #question {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+
+  #options button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    width: 100%;
+    background: #424242;
+    color: #f5f5f5;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #options button:hover {
+    background: #616161;
+  }
+
+  .btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #43a047;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.3s;
+  }
+
+  .btn:hover {
+    background-color: #66bb6a;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .correct {
+    background-color: #689f38 !important;
+  }
+
+  .wrong {
+    background-color: #e53935 !important;
+  }
+
+  #explanation {
+    margin-top: 15px;
+    padding: 12px;
+    background-color: #333;
+    font-size: 0.95em;
+    text-align: left;
+    color: #e0e0e0;
+  }
+
+  #result-container h2 {
+    color: #ffcc80;
+  }
+    </style>
+
+</head>
+<body>
+  <div class="container">
+    <h1>India Quest</h1>
+    <p class="subtitle">ตอบคำถามความรู้ทั่วไปเกี่ยวกับอินเดีย</p>
+
+    <div id="start-container">
+      <button id="start-btn" class="btn">เริ่มเกม</button>
+    </div>
+
+    <div id="quiz-container" class="hidden">
+      <div id="question"></div>
+      <div id="options"></div>
+      <div id="explanation" class="hidden"></div>
+      <button id="next-btn" class="btn hidden">ข้อต่อไป</button>
+    </div>
+
+    <div id="result-container" class="hidden">
+      <h2>ทำได้ยุเเล้ว <span id="score">0</span> คะแนน!</h2>
+      <button id="restart-btn" class="btn">เล่นใหม่</button>
+    </div>
+  </div>
+
+  <script>
+    const allQuestions = [
+      {
+        question: "เมืองหลวงของอินเดียคือเมืองใด?",
+        options: ["มุมไบ", "นิวเดลี", "เจนไน", "ไฮเดอราบาด"],
+        answer: "นิวเดลี",
+        explanation: "นิวเดลีเป็นเมืองหลวงของอินเดียและเป็นที่ตั้งของรัฐบาลกลางและสถานทูตต่างประเทศ"
+      },
+      {
+        question: "เทศกาล Diwali คือเทศกาลอะไร?",
+        options: ["เทศกาลแห่งแสง", "เทศกาลอาหาร", "เทศกาลดนตรี", "เทศกาลน้ำ"],
+        answer: "เทศกาลแห่งแสง",
+        explanation: "Diwali เป็นเทศกาลแห่งแสงสว่างที่เฉลิมฉลองชัยชนะของความดีเหนือความชั่วในศาสนาฮินดู"
+      },
+      {
+        question: "แม่น้ำศักดิ์สิทธิ์ของอินเดียชื่อว่าอะไร?",
+        options: ["ยมุนา", "คงคา", "กฤษณะ", "สรัสวตี"],
+        answer: "คงคา",
+        explanation: "แม่น้ำคงคาเป็นแม่น้ำศักดิ์สิทธิ์ที่สุดในศาสนาฮินดู โดยเชื่อกันว่าการอาบน้ำในแม่น้ำนี้จะชำระบาปได้"
+      },
+      {
+        question: "ศาสนาหลักของอินเดียคือศาสนาอะไร?",
+        options: ["ศาสนาคริสต์", "ศาสนาอิสลาม", "ศาสนาฮินดู", "ศาสนาพุทธ"],
+        answer: "ศาสนาฮินดู",
+        explanation: "ศาสนาฮินดูเป็นศาสนาหลักของอินเดีย โดยมีผู้คนกว่าร้อยละ 79 ของประชากรนับถือ"
+      },
+      {
+        question: "อาหารจานไหนเป็นอาหารอินเดียแบบดั้งเดิม?",
+        options: ["ซูชิ", "ทาโก้", "นานกับแกง", "สปาเกตตี"],
+        answer: "นานกับแกง",
+        explanation: "นานคือขนมปังแผ่นที่กินคู่กับแกงชนิดต่างๆ เป็นอาหารประจำของอินเดียหลายภาค"
+      },
+      {
+        question: "ภาษาทางการของอินเดียคืออะไร?",
+        options: ["อังกฤษและฮินดี", "ทมิฬ", "เบงกาลี", "อูรดู"],
+        answer: "อังกฤษและฮินดี",
+        explanation: "อินเดียมีภาษาทางการสองภาษา ได้แก่ ฮินดีและอังกฤษ เพื่อใช้ในงานราชการและเอกสารทางการ"
+      },
+      {
+        question: "สัตว์ประจำชาติของอินเดียคืออะไร?",
+        options: ["เสือโคร่ง", "ช้าง", "สิงโต", "ควาย"],
+        answer: "เสือโคร่ง",
+        explanation: "เสือโคร่งเบงกอลเป็นสัตว์ประจำชาติของอินเดีย สื่อถึงพลัง ความกล้าหาญ และความสง่างาม"
+      },
+      {
+        question: "บอลลีวูดเกี่ยวข้องกับอะไร?",
+        options: ["ภาพยนตร์", "กีฬา", "ดนตรี", "อาหาร"],
+        answer: "ภาพยนตร์",
+        explanation: "บอลลีวูดคืออุตสาหกรรมภาพยนตร์ของอินเดีย มีฐานใหญ่อยู่ที่มุมไบ และผลิตหนังหลายพันเรื่องต่อปี"
+      },
+      {
+        question: "ทัชมาฮาลตั้งอยู่ในเมืองใด?",
+        options: ["อัครา", "ชัยปุระ", "มุมไบ", "โกลกาตา"],
+        answer: "อัครา",
+        explanation: "ทัชมาฮาลตั้งอยู่ที่เมืองอัครา สร้างโดยจักรพรรดิชาห์จาฮันเพื่อเป็นอนุสรณ์แด่พระมเหสีของเขา"
+      },
+      {
+        question: "เครื่องเทศยอดนิยมในอาหารอินเดียคืออะไร?",
+        options: ["ขมิ้น", "อบเชย", "กานพลู", "ใบกระวาน"],
+        answer: "ขมิ้น",
+        explanation: "ขมิ้นเป็นเครื่องเทศหลักในอาหารอินเดีย ให้สีเหลืองสด กลิ่นหอม และมีสรรพคุณทางยา"
+      }
+    ];
+
+    let selectedQuestions = [], currentQuestion = 0, score = 0, answered = false;
+    const maxQuestions = 5;
+    const startContainer = document.getElementById('start-container');
+    const quizContainer = document.getElementById('quiz-container');
+    const resultContainer = document.getElementById('result-container');
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const explanationEl = document.getElementById('explanation');
+    const nextBtn = document.getElementById('next-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const startBtn = document.getElementById('start-btn');
+    const scoreEl = document.getElementById('score');
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function loadQuestion() {
+      const q = selectedQuestions[currentQuestion];
+      questionEl.textContent = q.question;
+      optionsEl.innerHTML = '';
+      explanationEl.classList.add('hidden');
+      nextBtn.classList.add('hidden');
+      answered = false;
+      shuffle(q.options).forEach(opt => {
+        const btn = document.createElement('button');
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(btn, opt);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(button, selected) {
+      if (answered) return;
+      answered = true;
+      const q = selectedQuestions[currentQuestion];
+      const buttons = optionsEl.querySelectorAll('button');
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent === q.answer) btn.classList.add('correct');
+        if (btn.textContent === selected && selected !== q.answer) btn.classList.add('wrong');
+      });
+      if (selected === q.answer) score++;
+      explanationEl.textContent = q.explanation;
+      explanationEl.classList.remove('hidden');
+      nextBtn.classList.remove('hidden');
+    }
+
+    nextBtn.onclick = () => {
+      currentQuestion++;
+      currentQuestion < selectedQuestions.length ? loadQuestion() : endQuiz();
+    };
+
+    restartBtn.onclick = startQuiz;
+    startBtn.onclick = () => {
+      startContainer.classList.add('hidden');
+      startQuiz();
+    };
+
+    function endQuiz() {
+      quizContainer.classList.add('hidden');
+      resultContainer.classList.remove('hidden');
+      scoreEl.textContent = `${score} / ${selectedQuestions.length}`;
+    }
+
+    function startQuiz() {
+      selectedQuestions = shuffle([...allQuestions]).slice(0, maxQuestions);
+      currentQuestion = 0;
+      score = 0;
+      quizContainer.classList.remove('hidden');
+      resultContainer.classList.add('hidden');
+      loadQuestion();
+    }
+  </script>
+</body>
+</html>
