@@ -1,261 +1,471 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>India Quest</title>
-  <style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to bottom, #121212, #1e1e1e);
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: #f0f0f0;
-  }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>India Quest</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #E0E0E0, #F0F0F0);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            transition: background 0.8s ease-in-out;
+        }
 
-  .container {
-    background: #2c2c2c;
-    padding: 30px;
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-  }
+        .container {
+            background: #FFFFFF;
+            border: 1px solid #E0E0E0;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.7s ease-out;
+        }
 
-  h1 {
-    color: #ff9100;
-  }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-  .subtitle {
-    font-size: 1.1em;
-    margin-bottom: 20px;
-    color: #e0e0e0;
-  }
+        h1 {
+            color: #222;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
 
-  #question {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-    color: #ffffff;
-  }
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #666;
+            font-weight: 300;
+        }
 
-  #options button {
-    display: block;
-    margin: 10px auto;
-    padding: 10px 20px;
-    width: 100%;
-    background: #424242;
-    color: #f5f5f5;
-    font-size: 1em;
-    cursor: pointer;
-    transition: 0.3s;
-  }
+        #question {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 600;
+            line-height: 1.4;
+            padding: 8px 0;
+        }
 
-  #options button:hover {
-    background: #616161;
-  }
+        #options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
 
-  .btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #43a047;
-    color: white;
-    cursor: pointer;
-    font-size: 1em;
-    transition: 0.3s;
-  }
+        #options button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 18px;
+            height: 80px;
+            width: 100%;
+            color: #444;
+            font-size: 1.4em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid #C0C0C0;
+            border-radius: 8px;
+            background-color: #F8F8F8;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
 
-  .btn:hover {
-    background-color: #66bb6a;
-  }
+        #options button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: #EFEFEF;
+            border-color: #A0A0A0;
+        }
 
-  .hidden {
-    display: none;
-  }
+        #options button:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
 
-  .correct {
-    background-color: #689f38 !important;
-  }
+        .btn {
+            margin-top: 30px;
+            padding: 14px 35px;
+            background-color: #444;
+            color: #FFFFFF;
+            cursor: pointer;
+            font-size: 1.15em;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-  .wrong {
-    background-color: #e53935 !important;
-  }
+        .btn:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
 
-  #explanation {
-    margin-top: 15px;
-    padding: 12px;
-    background-color: #333;
-    font-size: 0.95em;
-    text-align: left;
-    color: #e0e0e0;
-  }
+        .hidden {
+            display: none;
+        }
 
-  #result-container h2 {
-    color: #ffcc80;
-  }
+        .correct {
+            background-color: #D4EDDA !important;
+            color: #285A32 !important;
+            border-color: #A3D9AA !important;
+            animation: correctHighlight 0.4s ease-out;
+            box-shadow: 0 0 15px rgba(163, 217, 170, 0.7) !important;
+        }
+
+        .wrong {
+            background-color: #F8D7DA !important;
+            color: #721C24 !important;
+            border-color: #F5C6CB !important;
+            animation: wrongShake 0.3s ease-out;
+            box-shadow: 0 0 15px rgba(245, 198, 203, 0.7) !important;
+        }
+
+        @keyframes correctHighlight {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 0.95; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25%, 75% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+        }
+
+        #explanation {
+            margin-top: 25px;
+            padding: 18px;
+            background-color: #F0F0F0;
+            font-size: 1.05em;
+            text-align: left;
+            color: #555;
+            border-radius: 8px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+            line-height: 1.5;
+        }
+
+        #result-container h2 {
+            color: #222;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        #result-container #score {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: #444;
+            display: block;
+            margin-top: 8px;
+        }
     </style>
-
 </head>
 <body>
-  <div class="container">
-    <h1>India Quest</h1>
-    <p class="subtitle">ตอบคำถามความรู้ทั่วไปเกี่ยวกับอินเดีย</p>
+    <div class="container">
+        <h1>India Quest</h1>
+        <p class="subtitle">คำถามเกี่ยวกับอินเดีย</p>
 
-    <div id="start-container">
-      <button id="start-btn" class="btn">เริ่มเกม</button>
+        <div id="start-container">
+            <button id="start-btn" class="btn">เริ่มเกม</button>
+        </div>
+
+        <div id="quiz-container" class="hidden">
+            <p id="progress-indicator" class="subtitle"></p>
+            <div id="question"></div>
+            <div id="options"></div>
+            <div id="explanation" class="hidden"></div>
+            <button id="next-btn" class="btn hidden">ข้อต่อไป</button>
+        </div>
+
+        <div id="result-container" class="hidden">
+            <h2>คะเเนน</h2>
+            <span id="score">0</span>
+            <button id="restart-btn" class="btn">เล่นใหม่</button>
+        </div>
     </div>
 
-    <div id="quiz-container" class="hidden">
-      <div id="question"></div>
-      <div id="options"></div>
-      <div id="explanation" class="hidden"></div>
-      <button id="next-btn" class="btn hidden">ข้อต่อไป</button>
-    </div>
+    <audio id="correct-sound" src="sound/correct.mp3" preload="auto"></audio>
+    <audio id="wrong-sound" src="sound/wrong.mp3" preload="auto"></audio>
+    <audio id="game-over-sound" src="sound/game-over.mp3" preload="auto"></audio>
+    <audio id="background-music" src="sound/background.mp3" loop preload="auto"></audio>
 
-    <div id="result-container" class="hidden">
-      <h2>ทำได้ยุเเล้ว <span id="score">0</span> คะแนน!</h2>
-      <button id="restart-btn" class="btn">เล่นใหม่</button>
-    </div>
-  </div>
+    <script>
+        // คำถามทั้งหมดของเกม
+        const allQuestions = [
+            {
+                question: "เมืองหลวงของอินเดียคือเมืองใด?",
+                options: ["มุมไบ", "นิวเดลี", "เจนไน", "ไฮเดอราบาด"],
+                answer: "นิวเดลี",
+                explanation: "นิวเดลีเป็นเมืองหลวงของอินเดียและเป็นที่ตั้งของรัฐบาลกลางและสถานทูตต่างประเทศ"
+            },
+            {
+                question: "เทศกาล Diwali คือเทศกาลอะไร?",
+                options: ["เทศกาลแห่งแสง", "เทศกาลอาหาร", "เทศกาลดนตรี", "เทศกาลน้ำ"],
+                answer: "เทศกาลแห่งแสง",
+                explanation: "Diwali เป็นเทศกาลแห่งแสงสว่างที่เฉลิมฉลองชัยชนะของความดีเหนือความชั่วในศาสนาฮินดู"
+            },
+            {
+                question: "แม่น้ำศักดิ์สิทธิ์ของอินเดียชื่อว่าอะไร?",
+                options: ["ยมุนา", "คงคา", "กฤษณะ", "สรัสวตี"],
+                answer: "คงคา",
+                explanation: "แม่น้ำคงคาเป็นแม่น้ำศักดิ์สิทธิ์ที่สุดในศาสนาฮินดู โดยเชื่อกันว่าการอาบน้ำในแม่น้ำนี้จะชำระบาปได้"
+            },
+            {
+                question: "ศาสนาหลักของอินเดียคือศาสนาอะไร?",
+                options: ["ศาสนาคริสต์", "ศาสนาอิสลาม", "ศาสนาฮินดู", "ศาสนาพุทธ"],
+                answer: "ศาสนาฮินดู",
+                explanation: "ศาสนาฮินดูเป็นศาสนาหลักของอินเดีย โดยมีผู้คนกว่าร้อยละ 79 ของประชากรนับถือ"
+            },
+            {
+                question: "อาหารจานไหนเป็นอาหารอินเดียแบบดั้งเดิม?",
+                options: ["ซูชิ", "ทาโก้", "นานกับแกง", "สปาเกตตี"],
+                answer: "นานกับแกง",
+                explanation: "นานคือขนมปังแผ่นที่กินคู่กับแกงชนิดต่างๆ เป็นอาหารประจำของอินเดียหลายภาค"
+            },
+            {
+                question: "ภาษาทางการของอินเดียคืออะไร?",
+                options: ["อังกฤษและฮินดี", "ทมิฬ", "เบงกาลี", "อูรดู"],
+                answer: "อังกฤษและฮินดี",
+                explanation: "อินเดียมีภาษาทางการสองภาษา ได้แก่ ฮินดีและอังกฤษ เพื่อใช้ในงานราชการและเอกสารทางการ"
+            },
+            {
+                question: "สัตว์ประจำชาติของอินเดียคืออะไร?",
+                options: ["เสือโคร่ง", "ช้าง", "สิงโต", "ควาย"],
+                answer: "เสือโคร่ง",
+                explanation: "เสือโคร่งเบงกอลเป็นสัตว์ประจำชาติของอินเดีย สื่อถึงพลัง ความกล้าหาญ และความสง่างาม"
+            },
+            {
+                question: "บอลลีวูดเกี่ยวข้องกับอะไร?",
+                options: ["ภาพยนตร์", "กีฬา", "ดนตรี", "อาหาร"],
+                answer: "ภาพยนตร์",
+                explanation: "บอลลีวูดคืออุตสาหกรรมภาพยนตร์ของอินเดีย มีฐานใหญ่อยู่ที่มุมไบ และผลิตหนังหลายพันเรื่องต่อปี"
+            },
+            {
+                question: "ทัชมาฮาลตั้งอยู่ในเมืองใด?",
+                options: ["อัครา", "ชัยปุระ", "มุมไบ", "โกลกาตา"],
+                answer: "อัครา",
+                explanation: "ทัชมาฮาลตั้งอยู่ที่เมืองอัครา สร้างโดยจักรพรรดิชาห์จาฮันเพื่อเป็นอนุสรณ์แด่พระมเหสีของเขา"
+            },
+            {
+                question: "เครื่องเทศยอดนิยมในอาหารอินเดียคืออะไร?",
+                options: ["ขมิ้น", "อบเชย", "กานพลู", "ใบกระวาน"],
+                answer: "ขมิ้น",
+                explanation: "ขมิ้นเป็นเครื่องเทศหลักในอาหารอินเดีย ให้สีเหลืองสด กลิ่นหอม และมีสรรพคุณทางยา"
+            }
+        ];
 
-  <script>
-    const allQuestions = [
-      {
-        question: "เมืองหลวงของอินเดียคือเมืองใด?",
-        options: ["มุมไบ", "นิวเดลี", "เจนไน", "ไฮเดอราบาด"],
-        answer: "นิวเดลี",
-        explanation: "นิวเดลีเป็นเมืองหลวงของอินเดียและเป็นที่ตั้งของรัฐบาลกลางและสถานทูตต่างประเทศ"
-      },
-      {
-        question: "เทศกาล Diwali คือเทศกาลอะไร?",
-        options: ["เทศกาลแห่งแสง", "เทศกาลอาหาร", "เทศกาลดนตรี", "เทศกาลน้ำ"],
-        answer: "เทศกาลแห่งแสง",
-        explanation: "Diwali เป็นเทศกาลแห่งแสงสว่างที่เฉลิมฉลองชัยชนะของความดีเหนือความชั่วในศาสนาฮินดู"
-      },
-      {
-        question: "แม่น้ำศักดิ์สิทธิ์ของอินเดียชื่อว่าอะไร?",
-        options: ["ยมุนา", "คงคา", "กฤษณะ", "สรัสวตี"],
-        answer: "คงคา",
-        explanation: "แม่น้ำคงคาเป็นแม่น้ำศักดิ์สิทธิ์ที่สุดในศาสนาฮินดู โดยเชื่อกันว่าการอาบน้ำในแม่น้ำนี้จะชำระบาปได้"
-      },
-      {
-        question: "ศาสนาหลักของอินเดียคือศาสนาอะไร?",
-        options: ["ศาสนาคริสต์", "ศาสนาอิสลาม", "ศาสนาฮินดู", "ศาสนาพุทธ"],
-        answer: "ศาสนาฮินดู",
-        explanation: "ศาสนาฮินดูเป็นศาสนาหลักของอินเดีย โดยมีผู้คนกว่าร้อยละ 79 ของประชากรนับถือ"
-      },
-      {
-        question: "อาหารจานไหนเป็นอาหารอินเดียแบบดั้งเดิม?",
-        options: ["ซูชิ", "ทาโก้", "นานกับแกง", "สปาเกตตี"],
-        answer: "นานกับแกง",
-        explanation: "นานคือขนมปังแผ่นที่กินคู่กับแกงชนิดต่างๆ เป็นอาหารประจำของอินเดียหลายภาค"
-      },
-      {
-        question: "ภาษาทางการของอินเดียคืออะไร?",
-        options: ["อังกฤษและฮินดี", "ทมิฬ", "เบงกาลี", "อูรดู"],
-        answer: "อังกฤษและฮินดี",
-        explanation: "อินเดียมีภาษาทางการสองภาษา ได้แก่ ฮินดีและอังกฤษ เพื่อใช้ในงานราชการและเอกสารทางการ"
-      },
-      {
-        question: "สัตว์ประจำชาติของอินเดียคืออะไร?",
-        options: ["เสือโคร่ง", "ช้าง", "สิงโต", "ควาย"],
-        answer: "เสือโคร่ง",
-        explanation: "เสือโคร่งเบงกอลเป็นสัตว์ประจำชาติของอินเดีย สื่อถึงพลัง ความกล้าหาญ และความสง่างาม"
-      },
-      {
-        question: "บอลลีวูดเกี่ยวข้องกับอะไร?",
-        options: ["ภาพยนตร์", "กีฬา", "ดนตรี", "อาหาร"],
-        answer: "ภาพยนตร์",
-        explanation: "บอลลีวูดคืออุตสาหกรรมภาพยนตร์ของอินเดีย มีฐานใหญ่อยู่ที่มุมไบ และผลิตหนังหลายพันเรื่องต่อปี"
-      },
-      {
-        question: "ทัชมาฮาลตั้งอยู่ในเมืองใด?",
-        options: ["อัครา", "ชัยปุระ", "มุมไบ", "โกลกาตา"],
-        answer: "อัครา",
-        explanation: "ทัชมาฮาลตั้งอยู่ที่เมืองอัครา สร้างโดยจักรพรรดิชาห์จาฮันเพื่อเป็นอนุสรณ์แด่พระมเหสีของเขา"
-      },
-      {
-        question: "เครื่องเทศยอดนิยมในอาหารอินเดียคืออะไร?",
-        options: ["ขมิ้น", "อบเชย", "กานพลู", "ใบกระวาน"],
-        answer: "ขมิ้น",
-        explanation: "ขมิ้นเป็นเครื่องเทศหลักในอาหารอินเดีย ให้สีเหลืองสด กลิ่นหอม และมีสรรพคุณทางยา"
-      }
-    ];
+        // เกี่ยวhtml
+        // ใช้ให้เข้าถึงกับจัดการหน้าเว็บ
+        const startScreen = document.getElementById('start-container'); // หน้าจอเริ่มเกม
+        const quizScreen = document.getElementById('quiz-container');   // หน้าจอตอนเล่นคำถาม
+        const resultScreen = document.getElementById('result-container'); // หน้าจอผลลัพธ์คะแนน
+        const questionDisplay = document.getElementById('question');     // ตรงที่แสดงข้อความคำถาม
+        const optionsContainer = document.getElementById('options');   // ที่แสดงปุ่มตัวเลือกคำตอบ
+        const explanationDisplay = document.getElementById('explanation'); // หน้าจะที่แสดงคำอธิบายคำตอบ
+        const nextQuestionButton = document.getElementById('next-btn'); // ปุ่มไปคำถามถัดไป
+        const restartGameButton = document.getElementById('restart-btn'); // ปุ่มกดเล่นเกมใหม่
+        const startGameButton = document.getElementById('start-btn');   // ปุ่มเวลาเริ่มต้นเกม
+        const scoreDisplay = document.getElementById('score');         // แสดงคะแนนรวม
+        const progressTracker = document.getElementById('progress-indicator'); // เอาไว้ที่แสดงความคืบหน้าของคำถาม เช่นน คำถามที่ 1 จาก 5
 
-    let selectedQuestions = [], currentQuestion = 0, score = 0, answered = false;
-    const maxQuestions = 5;
-    const startContainer = document.getElementById('start-container');
-    const quizContainer = document.getElementById('quiz-container');
-    const resultContainer = document.getElementById('result-container');
-    const questionEl = document.getElementById('question');
-    const optionsEl = document.getElementById('options');
-    const explanationEl = document.getElementById('explanation');
-    const nextBtn = document.getElementById('next-btn');
-    const restartBtn = document.getElementById('restart-btn');
-    const startBtn = document.getElementById('start-btn');
-    const scoreEl = document.getElementById('score');
+        // ของเสียงในเกม
+        // เล่นเสียงต่างๆ ระหว่างเล่นเกม
+        const correctSoundEffect = document.getElementById('correct-sound');   // เสียงเวลาตอบถูก
+        const wrongSoundEffect = document.getElementById('wrong-sound');     // เสียงตอนตอบผิด
+        const gameOverSoundEffect = document.getElementById('game-over-sound'); // เสียงตอนเกมจบ
+        const gameBackgroundMusic = document.getElementById('background-music'); // เพลงประกอบเกม (หน้าจะเล่นวนได้)
 
-    function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
+        // ตัวแปรเก็บสถานะเวลาเล่นเกม
+        let questionsForThisRound = [];  // array เก็บคำถามที่สุ่มมาใช้ในรอบปัจจุบัน เวลากำลังทำงานยุ่
+        let currentQuestionNumber = 0;   // ลำดับคำถามของปัจจุบันที่กำลังแสดงอยู่ เริ่มต้นที่ 0
+        let playerScore = 0;             // คะแนนที่คนเล่นทำได้ในรอบปัจจุบัน
+        let hasPlayerAnswered = false;   // flag ตรวจว่าผู้เล่นได้เลือกคำตอบสำหรับคำถามปัจจุบันแล้วยัง
+        const MAX_QUESTIONS_PER_ROUND = 5; // จำนวนของคำถามสูงสุดที่จะใช้ในแต่ละรอบของเกมม
 
-    function loadQuestion() {
-      const q = selectedQuestions[currentQuestion];
-      questionEl.textContent = q.question;
-      optionsEl.innerHTML = '';
-      explanationEl.classList.add('hidden');
-      nextBtn.classList.add('hidden');
-      answered = false;
-      shuffle(q.options).forEach(opt => {
-        const btn = document.createElement('button');
-        btn.textContent = opt;
-        btn.onclick = () => checkAnswer(btn, opt);
-        optionsEl.appendChild(btn);
-      });
-    }
+        /*
+         - function shuffleArray ฟังก์ชันสำหรับเวลาสุ่มลำดับของ array ใช้เพื่อให้ลำดับคำถามและตัวเลือกคำตอบไม่ซ้ำกันในแต่ละครั้งที่เล่น
+         - param {Array} arrayToShuffle อาร์เรย์ที่ต้องการสุ่มลำดับ
+         - param คือ การบอกว่าบรรทัดนี้กำลังอธิบาย พารามิเตอร์อของฟังก์ชันอยุ่นะ
+         - returns {Array} array ที่โดนสุ่มลำดับแล้ว
+         */
+        function shuffleArray(arrayToShuffle) {
+            let currentIndex = arrayToShuffle.length, randomIndex;
 
-    function checkAnswer(button, selected) {
-      if (answered) return;
-      answered = true;
-      const q = selectedQuestions[currentQuestion];
-      const buttons = optionsEl.querySelectorAll('button');
-      buttons.forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === q.answer) btn.classList.add('correct');
-        if (btn.textContent === selected && selected !== q.answer) btn.classList.add('wrong');
-      });
-      if (selected === q.answer) score++;
-      explanationEl.textContent = q.explanation;
-      explanationEl.classList.remove('hidden');
-      nextBtn.classList.remove('hidden');
-    }
+            // ลูปไปเรื่อยๆ จนกว่าจะไม่มีให้สุ่ม
+            while (currentIndex !== 0) {
+                // เลือก index ที่เหลืออยู่แบบสุ่ม
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--; // ลดองค์ประกอบที่ยังไม่ได้สุ่ม
 
-    nextBtn.onclick = () => {
-      currentQuestion++;
-      currentQuestion < selectedQuestions.length ? loadQuestion() : endQuiz();
-    };
+                // สลับที่องค์ประกอบของปัจจุบันกับองค์ประกอบที่สุ่มได้
+                [arrayToShuffle[currentIndex], arrayToShuffle[randomIndex]] = [arrayToShuffle[randomIndex], arrayToShuffle[currentIndex]];
+            }
+            return arrayToShuffle;
+        }
 
-    restartBtn.onclick = startQuiz;
-    startBtn.onclick = () => {
-      startContainer.classList.add('hidden');
-      startQuiz();
-    };
+        /**
+        - function startQuiz ฟังก์ชันเริ่มต้นเกมใหม่
+            สุ่มคำถามและเลือกตามจำนวนที่กำหนดw;h
+            รีเซ็ตสถานะเกม อย่างเช่น คะแนน, ลำดับคำถาม
+            ซ่อนหน้าจอเวลาเริ่มและแสดงหน้าจอเกม
+            โหลดคำถามแรก เริ่มเล่นเพลงประกอบ
+         */
+        function startQuiz() {
+            // เลือกคำถามแบบสุ่ม 5 ข้อจาก allQuestions
+            questionsForThisRound = shuffleArray([...allQuestions]).slice(0, MAX_QUESTIONS_PER_ROUND);
+            currentQuestionNumber = 0; // เริ่มต้นคำถามที่ 0
+            playerScore = 0;           // รีเซ็ตคะแนนเป็น 0
 
-    function endQuiz() {
-      quizContainer.classList.add('hidden');
-      resultContainer.classList.remove('hidden');
-      scoreEl.textContent = `${score} / ${selectedQuestions.length}`;
-    }
+            // ซ่อนจอเริ่มต้นและแสดงหน้าจอเกม
+            startScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            resultScreen.classList.add('hidden');
 
-    function startQuiz() {
-      selectedQuestions = shuffle([...allQuestions]).slice(0, maxQuestions);
-      currentQuestion = 0;
-      score = 0;
-      quizContainer.classList.remove('hidden');
-      resultContainer.classList.add('hidden');
-      loadQuestion();
-    }
-  </script>
+            loadQuestion(); // โหลดคำถามแรก
+            //  GPT เริ่มเล่นเพลงประกอบเกม และดักจับ error ถ้าเล่นไม่ได้
+            gameBackgroundMusic.play().catch(e => console.log("Background music play failed:", e));
+        }
+
+        /**
+         - function loadQuestion ฟังก์ชันสำหรับโหลดและแสดงคำถามปัจจุบันที่หน้าจอ
+         - แสดงข้อความคำถามกับตัวเลือก
+         - อัปเดตตัวบอกความคืบหน้า
+         - ซ่อนคำอธิบายและปุ่ม ข้อต่อไป
+         - รีเซ็ตสถานะการตอบของผู้เล่น
+         */
+        function loadQuestion() {
+            const currentQuestionData = questionsForThisRound[currentQuestionNumber]; // ดึงข้อมูลมาจากคำถามปัจจุบัน
+
+            questionDisplay.textContent = currentQuestionData.question; // แสดงข้อความคำถาม
+            optionsContainer.innerHTML = ''; // ล้างปุ่มตัวเลือกเก่าทั้งหมด
+
+            explanationDisplay.classList.add('hidden'); // ซ่อนคำอธิบาย
+            nextQuestionButton.classList.add('hidden'); // ซ่อนปุ่ม ข้อต่อไป
+            hasPlayerAnswered = false; // รีเซ็ตสถานะว่าผู้เล่นยังไม่ได้ตอบคำถามนี้
+
+            // อัปเดตข้อความแสดงความคืบหน้าคำถาม
+            progressTracker.textContent = `คำถามที่ ${currentQuestionNumber + 1} จาก ${questionsForThisRound.length}`;
+
+            // สุ่มลำดับตัวเลือกคำตอบและก็สร้างปุ่มสำหรับแต่ละตัวเลือก
+            const shuffledOptions = shuffleArray([...currentQuestionData.options]);
+            shuffledOptions.forEach(optionText => {
+                const optionButton = document.createElement('button'); // สร้างปุ่ม
+                optionButton.textContent = optionText; // กำหนดข้อความบนปุ่มเป็นตัวเลือก
+                // กำหนด Event Listener เวลาคลิกปุ่มตัวเลือก ให้เรียก handleAnswerClick
+                optionButton.onclick = () => handleAnswerClick(optionButton, optionText);
+                optionsContainer.appendChild(optionButton); // เพิ่มปุ่มลงใน options
+            });
+        }
+
+        /**
+         - function handleAnswerClick ฟังก์ชันจัดการเมื่อผู้เล่นคลิกที่ปุ่มคำตอบ
+         - ตรวจว่าคนเล่นตอบไปแล้วยัง
+         - ปิดการใช้งานปุ่มตัวเลือกทั้งหมด
+         - ทำเครื่องหมายปุ่มที่ถูกต้อง/ผิด
+         - เพิ่มคะแนนและเล่นเสียงตามผลการตอบ
+         - แสดงคำอธิบายและปุ่ม "ข้อต่อไป"
+            param {HTMLElement} clickedButton ปุ่มที่คนคลิก
+            param {string} selectedOption ข้อความตัวเลือกที่เลือกไป
+         */
+        function handleAnswerClick(clickedButton, selectedOption) {
+            // ถ้าคนเล่นตอบไปแล้วของคำถามนี้ ไม่ต้องทำอะไรอีก
+            if (hasPlayerAnswered) return;
+            hasPlayerAnswered = true; // ตั้งค่าสถานะว่าได้ตอบแล้ว
+
+            const currentQuestionData = questionsForThisRound[currentQuestionNumber]; // ดึงข้อมูลคำถามปัจจุบัน
+            const allOptionButtons = optionsContainer.querySelectorAll('button'); // เลือกปุ่มตัวเลือกทั้งหมด
+
+            // วนลูปผ่านปุ่มที่เลือกทั้งหมดเพื่อการแสดงผลและปิดการใช้งาน
+            allOptionButtons.forEach(button => {
+                button.disabled = true; // ปิดการใช้งานปุ่มทั้งหมดเพื่อไม่ให้คลิกซ้ำ
+
+                // ถ้าข้อความบนปุ่มตรงกับคำตอบที่ถูกต้อง
+                if (button.textContent === currentQuestionData.answer) {
+                    button.classList.add('correct'); // เพิ่มคลาส 'correct' ใช้สีเขียว
+                }
+                // ถ้าปุ่มที่วนลูปอยู่คือปุ่มที่คนเล่นเลือก และคำตอบไม่ถูก
+                else if (button.textContent === selectedOption) {
+                    button.classList.add('wrong'); // เพิ่มคลาส 'wrong' ใช้สีแดง
+                }
+            });
+
+            // ตรวจว่าผู้เล่นตอบถูกไหมไม่
+            if (selectedOption === currentQuestionData.answer) {
+                playerScore++; // เพิ่มคะแนน
+                correctSoundEffect.currentTime = 0; // รีเซ็ตเสียงเพื่อเล่นเลยทันที
+                correctSoundEffect.play().catch(e => console.log("Correct sound play failed:", e));
+            } else {
+                wrongSoundEffect.currentTime = 0; // รีเซ็ตเสียง
+                wrongSoundEffect.play().catch(e => console.log("Wrong sound play failed:", e));
+            }
+
+            explanationDisplay.textContent = currentQuestionData.explanation; // แสดงอธิบาย
+            explanationDisplay.classList.remove('hidden'); // ทำให้คำอธิบายโชออกมา
+            nextQuestionButton.classList.remove('hidden'); // ทำให้ปุ่ม ข้อต่อไป โชมาอีก
+        }
+
+        /**
+         - function goToNextQuestion ฟังก์ชันเพื่อเลื่อนไปคำถามถัดไปหรือจบเกม
+         - เพิ่มลำดับคำถาม
+         - ถ้ายังมีคำถามเหลือ ให้โหลดคำถามต่อไป
+         - ถ้าหมดคำถามแล้ว ให้จบเกม
+         */
+        function goToNextQuestion() {
+            currentQuestionNumber++; // เพิ่มลำดับคำถาม
+
+            // ตรวจว่ายังมีคำถามเหลืออยู่ในรอบนี้ไหม
+            if (currentQuestionNumber < questionsForThisRound.length) {
+                loadQuestion(); // ถ้ามี ให้โหลดคำถามต่อไป
+            } else {
+                endQuiz(); // ถ้าหมดแล้ว ให้จบเกม
+            }
+        }
+
+        /**
+         - function endQuiz ฟังก์ชันสำหรับจบเกมและแสดคะแนน
+         - ซ่อนหน้าจอเกมและแสดงหน้าจอผลลัพธ์
+         - แสดงคะแนนรวมของคนเล่น
+         - หยุดกับรีเซ็ตเพลงประกอบเกม และเล่นเสียง เกมโอเวอร์
+         */
+        function endQuiz() {
+            quizScreen.classList.add('hidden');     // ซ่อนหน้าจอคำถาม
+            resultScreen.classList.remove('hidden'); // แสดงหน้าจอผลลัพธ์
+
+            // แสดงคะแนนใน คะแนนที่ได้ , จำนวนคำถามทั้งหมด
+            scoreDisplay.textContent = `${playerScore} / ${questionsForThisRound.length}`;
+
+            gameBackgroundMusic.pause();        // หยุดเพลงประกอบ
+            gameBackgroundMusic.currentTime = 0; // รีเซ็ตเวลาเพลงกลับไปที่ตอนเริ่มต้น
+
+            gameOverSoundEffect.currentTime = 0; // รีเซ็ตเสียงเกมโอเวอร์
+            gameOverSoundEffect.play().catch(e => console.log("Game over sound play failed:", e));
+        }
+
+        // Event Listeners: เอาไว้จัดการการคลิกของปุ่มต่างๆ
+        // เวลาปุ่ม เริ่มเกม ถูกคลิก ให้เรียกฟังก์ชัน startQuiz
+        startGameButton.addEventListener('click', startQuiz);
+        // เวลาปุ่ม ข้อต่อไป ถูกคลิก ให้เรียกฟังก์ชัน goToNextQuestion
+        nextQuestionButton.addEventListener('click', goToNextQuestion);
+        // เวลาปุ่ม เล่นใหม่ ถูกคลิก ให้เรียกฟังก์ชัน startQuiz เพื่อเริ่มเกมใหม่อีก
+        restartGameButton.addEventListener('click', startQuiz);
+    </script>
 </body>
 </html>
