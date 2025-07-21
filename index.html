@@ -777,7 +777,7 @@
             gameBackgroundMusic.currentTime = 0; // รีเซ็ตเพลงให้กลับไปเริ่มที่ต้นเพลง
 
             // เล่นเสียงตามคะแนน
-            if (playerScore >= 3) { // ถ้าคะแนน 3 ขึ้นไป
+            if (playerScore >= 6) { // ถ้าคะแนน 6 ขึ้นไป
                 winSoundEffect.currentTime = 0; // รีเซ็ตเสียงชนะ เผื่อ
                 winSoundEffect.play().catch(e => console.log("Win sound play failed:", e)); // เล่นเสียงชนะ
             } else { // ถ้าคะแนนน้อยกว่า 3
